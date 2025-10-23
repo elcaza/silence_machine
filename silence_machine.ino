@@ -1,5 +1,5 @@
 /*
-* Silence Machine - Single Core v1 
+* Silence Machine - Dual Core v1 
 * https://github.com/elcaza/silence_machine_single_core
 * elcaza
 * ESP32
@@ -10,6 +10,13 @@
 #include <ezButton.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
+// ****************************************************
+// START_DUAL_CORE_CODE
+#include "esp_task_wdt.h"
+#include "soc/timer_group_reg.h"
+// END_DUAL_CORE_CODE
+// ****************************************************
 
 // =====================================================================
 // INICIO DE OPCIONES CONFIGURABLES
@@ -105,6 +112,15 @@ bool rf2_success = false;
 char string_current_index[10];
 char string_number_of_modes[10];
 
+// ****************************************************
+// START_DUAL_CORE_CODE
+volatile int c0_mode = 0;
+volatile int c1_mode = 0;
+bool c0_start = false;
+bool c1_start = false;
+// END_DUAL_CORE_CODE
+// ****************************************************
+
 // =====================================================================
 // INICIO DE OPCIONES CONFIGURABLES
 // Configuración de los modos de silencio
@@ -118,9 +134,7 @@ char string_number_of_modes[10];
 
 const char* all_modes[] = {
 	"Description for mode 1",
-	"Description for mode 2",
-	"Description for mode 3",
-	"Description for mode 4"
+	"Description for mode 2"
 };
 
 int number_of_modes = sizeof(all_modes) / sizeof(all_modes[0]);
@@ -129,45 +143,43 @@ int number_of_modes = sizeof(all_modes) / sizeof(all_modes[0]);
 // Funciones de los modos de silencio
 // ****************************************************
 
+// ****************************************************
+// START_DUAL_CORE_CODE
 // Modos de silencio, funciones.
-void silence_mode_1() {
+void c0_silence_mode_1() {
 	while(1){
 		for (size_t i = 0; i < 40; i++) {
 			radio1.setChannel(i);
+		}
+	}
+}
+
+void c0_silence_mode_2() {
+	while(1){
+		for (size_t i = 0; i < 40; i++) {
+			radio1.setChannel(i);
+		}
+	}
+}
+
+void c1_silence_mode_1() {
+	while(1){
+		for (size_t i = 0; i < 40; i++) {
 			radio2.setChannel(i+40);
 		}
 	}
 }
 
-void silence_mode_2() {
+void c1_silence_mode_2() {
 	while(1){
-		for (size_t i = 0; i < 37; i++) {
-			radio1.setChannel(i);
+		for (size_t i = 0; i < 40; i++) {
 			radio2.setChannel(i+40);
-
-			radio1.setChannel(i+3);
-			radio2.setChannel(i+43);
 		}
 	}
 }
 
-void silence_mode_3() {
-	while(1){
-		for (size_t i = 0; i < 78; i++) {
-			radio1.setChannel(i);
-			radio2.setChannel(i+2);
-		}
-	}
-}
-
-void silence_mode_4() {
-	while(1){
-		for (size_t i = 0; i < sizeof(wifi_frequencies) / sizeof(wifi_frequencies[0]); i++) {
-			radio1.setChannel(wifi_frequencies[i]);
-			radio2.setChannel(wifi_frequencies[i]+2);
-		}
-	}
-}
+// END_DUAL_CORE_CODE
+// ****************************************************
 
 // ****************************************************
 // Menú para los modos de silencio
@@ -175,28 +187,134 @@ void silence_mode_4() {
 
 // Modos de silencio, función inicializadora.
 void generate_silence(int p_index) {
+	// ****************************************************
+	// START_DUAL_CORE_CODE
+	Serial.println("Generate silence:");
 	switch (p_index + 1) {
 		case 1:
 			Serial.println(F("Case 1"));
-			silence_mode_1();
+			// silence_mode_1();
+			c0_mode = 1;
+			c1_mode = 1;
 			break;
 		case 2:
 			Serial.println(F("Case 2"));
-			silence_mode_2();
-			break;
-		case 3:
-			Serial.println(F("Case 3"));
-			silence_mode_3();
-			break;
-		case 4:
-			Serial.println(F("Case 4"));
-			silence_mode_4();
+			// silence_mode_2();
+			// DUAL_CORE
+			c0_mode = 2;
+			c1_mode = 2;
 			break;
 		default:
 			Serial.println(F("Ocurrio un error en la funcion generate_silenc"));
 			break;
 	}
+	delay(50);
+	c0_start = true;
+	c1_start = true;
+	// END_DUAL_CORE_CODE
+	// ****************************************************
 }
+
+// ****************************************************
+// START_DUAL_CORE_CODE
+
+// ****************************************************
+// Funciones del core 0 y core 1
+// ****************************************************
+
+void turn_off_autoreboot() {
+	// =========================================================
+	// DESACTIVACIÓN DE WATCHDOGS PARA PERMITIR EL BLOQUEO DE NÚCLEOS
+	// Uso de macros de registro de bajo nivel para compatibilidad
+	// =========================================================
+
+	// Deshabilitar el Task Watchdog Timer (TWDT)
+	esp_task_wdt_deinit();
+	Serial.println("Task Watchdog Timer (TWDT) deshabilitado.");
+
+	// Deshabilitar el Interrupt Watchdog (IWDT) del Timer Group 0 (Core 0)
+
+	// Deshabilitar la escritura de protección (WRITE PROTECT) temporalmente
+	// WRITE_PERI_REG(dirección_registro, valor)
+	WRITE_PERI_REG(TIMG_WDTWPROTECT_REG(0), TIMG_WDT_WKEY_V); 
+	
+	// Deshabilitar el Watchdog de Grupo 0
+	WRITE_PERI_REG(TIMG_WDTCONFIG0_REG(0), 0); 
+	
+	// Habilitar la escritura de protección nuevamente (opcional, pero buena práctica)
+	WRITE_PERI_REG(TIMG_WDTWPROTECT_REG(0), 0); 
+
+	Serial.println("Watchdog de Timer Group 0 (Core 0) deshabilitado.");
+
+	// Deshabilitar el Interrupt Watchdog (IWDT) del Timer Group 1 (Core 1)
+
+	// Deshabilitar la escritura de protección temporalmente
+	WRITE_PERI_REG(TIMG_WDTWPROTECT_REG(1), TIMG_WDT_WKEY_V); 
+	
+	// Deshabilitar el Watchdog de Grupo 1
+	WRITE_PERI_REG(TIMG_WDTCONFIG0_REG(1), 0); 
+	
+	// Habilitar la escritura de protección nuevamente
+	WRITE_PERI_REG(TIMG_WDTWPROTECT_REG(1), 0); 
+
+	Serial.println("Watchdog de Timer Group 1 (Core 1) deshabilitado.");
+
+	// =========================================================
+}
+
+void task_core_0(void * pvParameters) {
+	Serial.println("task_core_0 está corriendo en el Core 0");
+
+	for(;;) {
+		vTaskDelay(pdMS_TO_TICKS(500));
+		while(c0_start){
+			Serial.println("Inicio accion  c0");
+			vTaskDelay(pdMS_TO_TICKS(1000));
+			switch(c0_mode) {
+				case 1:
+					Serial.println(F("Case 1"));
+					c0_silence_mode_1();
+					break;
+				case 2:
+					Serial.println(F("Case 2"));
+					c0_silence_mode_2();
+					break;
+				default:
+					Serial.println(F("Ocurrio un error en la funcion generate_silenc()"));
+					break;
+			}
+		}
+	}
+}
+
+void task_core_1(void * pvParameters) {
+	Serial.println("task_core_1 está corriendo en el Core 1");
+
+	for(;;) {
+		vTaskDelay(pdMS_TO_TICKS(500));
+		while(c1_start){
+			Serial.println("Inicio  accion c1");
+			vTaskDelay(pdMS_TO_TICKS(1000));
+
+			switch(c1_mode) {
+				case 1:
+					Serial.println(F("Case 1"));
+					c1_silence_mode_1();
+					break;
+				case 2:
+					Serial.println(F("Case 2"));
+					c1_silence_mode_2();
+					break;
+				default:
+					Serial.println(F("Ocurrio un error en la funcion generate_silenc()"));
+					break;
+			}
+		}
+	}
+}
+
+// END_DUAL_CORE_CODE
+// ****************************************************
 
 // =====================================================================
 // FIN DE OPCIONES CONFIGURABLES
@@ -215,7 +333,7 @@ void show_health_test(bool p_oled_ok, bool p_rf1_ok, bool p_rf2_ok) {
 	display.println("Silence Machine v1");
 
 	display.setCursor(0, 10);
-	display.println("Single core version");
+	display.println("Dual core version");
 
 	display.setCursor(0, 25);
 	display.print("OLED: ");
@@ -338,6 +456,7 @@ void start_nav() {
 		}
 
 		if (button4.isPressed()) {
+			waiting_menu = false;
 			show_current_mode(current_index+1);
 			generate_silence(current_index);
 		}
@@ -353,7 +472,7 @@ void start_nav() {
 void setup() {
 	// Conexión Serial
 	Serial.begin(SERIAL_BAUD);
-	Serial.println(F("Silence Machine v1 - Single core version")); 
+	Serial.println(F("Silence Machine v1 - Dual core version")); 
 
 	// Inicialización de los botones
 	button1.setDebounceTime(debounce_time);
@@ -415,10 +534,47 @@ void setup() {
 	show_health_test(oled_success, rf1_success, rf2_success);
 
 	press_to_start();
+
+	// ****************************************************
+	// START_DUAL_CORE_CODE
+
+	Serial.println("Iniciando configuración de FreeRTOS en ESP32...");
+
+	// 1. Crear la tarea para el Core 0
+	xTaskCreatePinnedToCore(
+		task_core_0,   	// Función que implementa la tarea
+		"Core 0 Task",  // Nombre de la tarea (para depuración)
+		1000,           // Tamaño de la pila (Stack size en bytes)
+		NULL,           // Parámetros de la tarea (ninguno)
+		1,              // Prioridad de la tarea (1)
+		NULL,           // Handle de la tarea 
+		0               // Núcleo a usar: Core 0
+	);
 	
+	// 2. Crear la tarea para el Core 1
+	xTaskCreatePinnedToCore(
+		task_core_1,    // Función que implementa la tarea
+		"Core 1 Task",  // Nombre de la tarea (para depuración)
+		1000,           // Tamaño de la pila (Stack size en bytes)
+		NULL,           // Parámetros de la tarea (ninguno)
+		1,              // Prioridad de la tarea (1)
+		NULL,           // Handle de la tarea 
+		1               // Núcleo a usar: Core 1
+	);
+
+	Serial.println("Tareas creadas. Monitorea el Serial Plotter para ver la concurrencia.");
+
+	turn_off_autoreboot();
+	// END_DUAL_CORE_CODE
+	// ****************************************************
+
 	start_nav();
 }
 
 void loop() {
-
+	// ****************************************************
+	// START_DUAL_CORE_CODE
+	vTaskDelay(pdMS_TO_TICKS(10));
+	// END_DUAL_CORE_CODE
+	// ****************************************************
 }

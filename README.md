@@ -1,28 +1,32 @@
-# Silence Machine - Single Core
-La máquina generadora de silencio. Versión de un solo núcleo. 
+# Silence Machine - Dual Core
+La máquina generadora de silencio. Versión de dos núcleos. 
 
 La máquina generadora de silencio es un dispositivo que te ayuda a recobrar la paz perdida cuando la bocina ruidosa de tu vecino suena a máximo volumen. 
 
 Para entender su funcionamiento necesitamos entender lo siguiente:
-1. La música es la combinación de sonidos, ritmos y silencios.
-1. Pese a las reglamentaciones locales, las autoridades informan que no pueden hacer nada en contra de las bocinas ruidosas que suenan dentro de los domicilios. "Que pongas tu música también", dicen.
-1. Dado lo anterior, solo quedaba una cosa por hacer. Poner mi música a todo volumen, siendo mi música una combinación de silencios a un volumen muy fuerte.
+1. La música es la combinación de sonidos, ritmos y silencios expresados en ondas y frecuencias.
+1. Pese a las reglamentaciones locales, las autoridades informan que no pueden hacer nada en contra de las bocinas ruidosas cuando estas suenan dentro de los domicilios. Dicen que si te molesta, "pongas tu música también".
+1. Dado lo anterior, solo quedaba una cosa por hacer. Poner mi música a todo volumen, siendo mi música una combinación de silencios a un a su máxima potencia.
 
 Señoras y señores, me complace presentarles a la máquina generadora de silencio.
 
 ## Componentes requeridos
-+ ESP32 o similar. 30 o 38 pines, son bienvenidos.
++ 1 ESP32 o similar. 30 o 38 pines, son bienvenidos.
 + 2 módulos de radio a 2.4 Ghz
-+ Pantala OLED con botones
++ 1 Pantala OLED con 4 botones
 + 2 Capacitores
-
++ 1 Protoboard
++ Cables dupont
+	+ 16 Female Female
+	+ 8 Male Female
+	
 # Modo de operación
 1. Prende el dispositivo
-1. Se corre de forma automática un chequeo de salud, se muestra el resultado en pantalla
+1. Se corre de forma automática un chequeo de salud, se muestra el resultado en la pantalla
 	+ Si todo sale bien, puedes proseguir 
 	+ Si alguno de los módulos RF falla, el resultado se mostrara en pantalla
 	+ Si la pantalla falla, en el Serial se mostrará el error
-	+ Muchas veces solo con reiniciarlo, `botón #`, se corregirá el error
+	+ En muchas ocasiones, solo con reiniciarlo, `botón #`, se corregirá el error
 1. Seleccionas
 	+ `#` => para reiniciar
 	+ `*` => para continuar
@@ -253,10 +257,63 @@ Señoras y señores, me complace presentarles a la máquina generadora de silenc
   </tbody>
 </table>
 
-# El proyecto, desarrollo, colaboración y modos de silencio
-Este proyecto es posible gracias a proyectos similares que eran Open Source. Este proyecto es Open Source y busca:
+# Crea tus propios modos de silencio
+Este proyecto es posible gracias a proyectos similares que eran Open Source, por lo que este proyecto también lo es y busca:
 1. Ser fácil de leer, analizar y modificar
 1. Permitir añadir modos de silencio personalizados
 1. Ser lo más eficiente posible
 	+ Durante el desarrollo de este proyecto se realizó un análisis y comparación de resultados, dando como resultado un proyecto más eficiente.
 	+ En las próximas semanas publicaré el resultado de algunas comparativas. (Espera el link aquí)
+
+## Composición del código
+1. Librerías
+1. Sección de configuraciones que puedes modificar
+	+ Configuración de pantalla
+	+ Configuración de radios
+	+ Configuración de botones
+	+ Configuraciones adicionales
+1. Definición de variables
+	+ Radios
+	+ Botones
+	+ Pantalla
+1. Configuración de modos de silencio (Puedes añadir los tuyos)
+	1. Array de descripciones para cada modo de silencio
+	1. Funciones de los modos de silencio (La lógica del modo)
+	1. Menú para los modos de silencio
+1. Funciones de operación
+	+ show_health_test
+	+ show_nav
+	+ show_current_mode
+	+ press_to_start
+	+ start_nav
+1. Función setup que inicializa el código
+
+## ¿Cómo añadir tus propios modos de silencio?
+Puedes crear tus propios métodos para generar silencio. Para esto debes tomar en cuenta las siguientes consideraciones:
+1. Frecuencias 2.4 Ghz
+	+ Bluetooth Clásico (2.402 GHz y 2.480 GHz)
+		+ 79 canales
+		+ 1 MHz cada uno
+		+ Salto de Frecuencia (FHSS) - 1600/s
+	+ BLE (2.402 GHz y 2.480 GHz)
+		+ 40 canales
+		+ 2 MHz
+		+ Salto de Frecuencia (FHSS) - 1600/s
+		+ Advertising Channels - 37, 38 y 39
+	+ Dicho lo anterior, para la librería RF24 tenemos los siguientes canales
+		+ Frecuencia(MHz) = 2400 + Número de Canal
+			+ CH 0 => 2400
+			+ CH 1 => 2401
+			+ ...
+			+ CH 80 => 2480
+
+## Creación de tus propios custom modes
+Modo de creación (`custom_mode`)
+1. Añades tu descripción de tu `custom_mode` al array `const char* all_modes[] = {};`
+1. Creas una función que coincida con el identificador numérico de tu `custom_mode` en `void silence_mode_#() {}`
+1. Añade el `case` correspondiente a tu `custom_mode` en `void generate_silence(int p_index) {}`
+
+## Pautas para el código
++ Identación por tabuladores de 4 espacios de longitud
++ Nombres homologados
++ Que los modos tengan un propósito definido y útil
