@@ -17,8 +17,18 @@ Señoras y señores, me complace presentarles a la máquina generadora de silenc
 + 2 Capacitores
 + 1 Protoboard
 + Cables dupont
-	+ 16 Female Female
-	+ 8 Male Female
+	+ 16 Female Female (1 PAQUETE DE 40, puede dar dos juegos.  Sobran conexiones rojas y negras)
+		+ 2 AMARILLO 🟡
+		+ 2 NARANJA 🟠
+		+ 2 VERDE 🟢
+		+ 2 AZUL 🔵
+		+ 2 MORADO 🟣
+		+ 2 BLANCO ⚪
+		+ 2 GRIS 🔘
+		+ 2 CAFE 🟤
+	+ 8 Male Female (1 PAQUETE DE 40, puede dar un solo juego. Sobran todos los colores. Se recomienda suplir con café y blanco)
+		+ 4 ROJO 🔴 || CAFE 🟤
+		+ 4 NEGRO ⬛ || BLANCO ⚪
 	
 # Modo de operación
 1. Prende el dispositivo
@@ -47,215 +57,190 @@ Señoras y señores, me complace presentarles a la máquina generadora de silenc
 # Tabla de conexiones
 
 <table>
-  <caption>Silence Machine - ESP32</caption>
-  <thead>
-    <tr>
-      <th>Componente</th>
-      <th>Especificación</th>
-      <th>Pin (ESP32)</th>
-      <th>10uf capacitor / 2da opción</th>
-      <th>Cable</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>VCC 🔴</td>
-      <td>3.3V</td>
-      <td>N/A (+) capacitor</td>
-      <td>Rojo</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>GND ⬛</td>
-      <td>GND</td>
-      <td>N/A (-) capacitor</td>
-      <td>Negro</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>CE 🟡</td>
-      <td>GPIO 04</td>
-      <td></td>
-      <td>Amarillo</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>CSN 🟠</td>
-      <td>GPIO 05</td>
-      <td></td>
-      <td>Naranja</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>SCK 🟢</td>
-      <td>GPIO 18</td>
-      <td></td>
-      <td>Verde</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>MOSI 🔵</td>
-      <td>GPIO 23</td>
-      <td></td>
-      <td>Azul</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>MISO 🟣</td>
-      <td>GPIO 19</td>
-      <td></td>
-      <td>Morado</td>
-    </tr>
-    <tr>
-      <td>1st nRF24L01</td>
-      <td>IRQ</td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>VCC 🔴</td>
-      <td>3.3V</td>
-      <td>N/A (+) capacitor</td>
-      <td>Rojo</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>GND ⬛</td>
-      <td>GND</td>
-      <td>N/A (-) capacitor</td>
-      <td>Negro</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>CE 🟡</td>
-      <td>GPIO 02</td>
-      <td></td>
-      <td>Amarillo</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>CSN 🟠</td>
-      <td>GPIO 15</td>
-      <td></td>
-      <td>Naranja</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>SCK 🟢</td>
-      <td>GPIO 14</td>
-      <td></td>
-      <td>Verde</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>MOSI 🔵</td>
-      <td>GPIO 13</td>
-      <td></td>
-      <td>Azul</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>MISO 🟣</td>
-      <td>GPIO 12</td>
-      <td></td>
-      <td>Morado</td>
-    </tr>
-    <tr>
-      <td>2do nRF24L01</td>
-      <td>IRQ</td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 1 - UP</td>
-      <td>Terminal</td>
-      <td>GPIO 17</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 1 - UP</td>
-      <td>Terminal</td>
-      <td>GND</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 2 - DOWN</td>
-      <td>Terminal</td>
-      <td>GPIO 16</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 2 - DOWN</td>
-      <td>Terminal</td>
-      <td>GND</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 3 - #</td>
-      <td>Terminal</td>
-      <td>EN</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 3 - #</td>
-      <td>Terminal</td>
-      <td>GND</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 4 - *</td>
-      <td>Terminal</td>
-      <td>GPIO 26</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Button 4 - *</td>
-      <td>Terminal</td>
-      <td>GND</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Display 1</td>
-      <td>VCC 🔴</td>
-      <td>3.3V</td>
-      <td></td>
-      <td>Rojo</td>
-    </tr>
-    <tr>
-      <td>Display 1</td>
-      <td>GND ⬛</td>
-      <td>GND</td>
-      <td></td>
-      <td>Negro</td>
-    </tr>
-    <tr>
-      <td>Display 1</td>
-      <td>SDA 🟡</td>
-      <td>GPIO 21</td>
-      <td>GPIO 32</td>
-      <td>Amarillo</td>
-    </tr>
-    <tr>
-      <td>Display 1</td>
-      <td>SCL 🟠</td>
-      <td>GPIO 22</td>
-      <td>GPIO 33</td>
-      <td>Naranja</td>
-    </tr>
-  </tbody>
+	<caption>Silence Machine - ESP32</caption>
+	<thead>
+		<tr>
+			<th>Componente</th>
+			<th>Especificación</th>
+			<th>Pin (ESP32)</th>
+			<th>10uf capacitor / 2da opción</th>
+			<th>Cable</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>VCC 🔴</td>
+			<td>3.3V</td>
+			<td>N/A (+) capacitor</td>
+			<td>Rojo</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>GND ⬛</td>
+			<td>GND</td>
+			<td>N/A (-) capacitor</td>
+			<td>Negro</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>CE 🟡</td>
+			<td>GPIO 04</td>
+			<td></td>
+			<td>Amarillo</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>CSN 🟠</td>
+			<td>GPIO 05</td>
+			<td></td>
+			<td>Naranja</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>SCK 🟢</td>
+			<td>GPIO 18</td>
+			<td></td>
+			<td>Verde</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>MOSI 🔵</td>
+			<td>GPIO 23</td>
+			<td></td>
+			<td>Azul</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>MISO 🟣</td>
+			<td>GPIO 19</td>
+			<td></td>
+			<td>Morado</td>
+		</tr>
+		<tr>
+			<td>1st nRF24L01</td>
+			<td>IRQ</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>VCC 🔴</td>
+			<td>3.3V</td>
+			<td>N/A (+) capacitor</td>
+			<td>Rojo</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>GND ⬛</td>
+			<td>GND</td>
+			<td>N/A (-) capacitor</td>
+			<td>Negro</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>CE 🟡</td>
+			<td>GPIO 02</td>
+			<td></td>
+			<td>Amarillo</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>CSN 🟠</td>
+			<td>GPIO 15</td>
+			<td></td>
+			<td>Naranja</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>SCK 🟢</td>
+			<td>GPIO 14</td>
+			<td></td>
+			<td>Verde</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>MOSI 🔵</td>
+			<td>GPIO 13</td>
+			<td></td>
+			<td>Azul</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>MISO 🟣</td>
+			<td>GPIO 12</td>
+			<td></td>
+			<td>Morado</td>
+		</tr>
+		<tr>
+			<td>2do nRF24L01</td>
+			<td>IRQ</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Button 1 - UP</td>
+			<td>Terminal</td>
+			<td>GPIO 25</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Button 2 - DOWN</td>
+			<td>Terminal</td>
+			<td>GPIO 26</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Button 3 - #</td>
+			<td>Terminal</td>
+			<td>EN</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Button 4 - *</td>
+			<td>Terminal</td>
+			<td>GPIO 27</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Display 1</td>
+			<td>VCC 🔴</td>
+			<td>3.3V</td>
+			<td></td>
+			<td>Rojo</td>
+		</tr>
+		<tr>
+			<td>Display 1</td>
+			<td>GND ⬛</td>
+			<td>GND</td>
+			<td></td>
+			<td>Negro</td>
+		</tr>
+		<tr>
+			<td>Display 1</td>
+			<td>SDA 🟡</td>
+			<td>GPIO 21</td>
+			<td>GPIO 32</td>
+			<td>Amarillo</td>
+		</tr>
+		<tr>
+			<td>Display 1</td>
+			<td>SCL 🟠</td>
+			<td>GPIO 22</td>
+			<td>GPIO 33</td>
+			<td>Naranja</td>
+		</tr>
+	</tbody>
 </table>
+
++ Las otras terminales de los botones, se conectan a GND. Cuando se usa la pantalla OLED con botones integrados, estos ya están cableados a GND.
++ Si se ocupan los pines de 2da opción, se debe modificar el código correspondiente en `// INICIO DE OPCIONES CONFIGURABLES`
 
 # Crea tus propios modos de silencio
 Este proyecto es posible gracias a proyectos similares que eran Open Source, por lo que este proyecto también lo es y busca:

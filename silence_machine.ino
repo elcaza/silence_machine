@@ -29,8 +29,8 @@
 
 // SDA va al GPIO 21 || también puede ser 32
 // SCL va al GPIO 22 || también puede ser 33
-#define SDA_PIN 32
-#define SCL_PIN 33
+#define SDA_PIN 21
+#define SCL_PIN 22
 
 // Tamaño de pantalla en pixeles
 #define SCREEN_WIDTH 128
@@ -62,9 +62,9 @@
 // ****************************************************
 // CONFIGURACION BOTONES
 // ****************************************************
-const int BUTTON_PIN1 = 16; // UP - K1
-const int BUTTON_PIN2 = 17; // DOWN - K2
-const int BUTTON_PIN4 = 26; // * START - K4
+const int BUTTON_PIN1 = 25; // UP - K1
+const int BUTTON_PIN2 = 26; // DOWN - K2
+const int BUTTON_PIN4 = 27; // * START - K4
 // BUTTON_3 TO EN (Reset físico)
 const int debounce_time = 100;
 
@@ -562,7 +562,7 @@ void setup() {
 		1               // Núcleo a usar: Core 1
 	);
 
-	Serial.println("Tareas creadas. Monitorea el Serial Plotter para ver la concurrencia.");
+	Serial.println("Tareas creadas.");
 
 	turn_off_autoreboot();
 	// END_DUAL_CORE_CODE
