@@ -302,3 +302,23 @@ Modo de creación (`custom_mode`)
 + Identación por tabuladores de 4 espacios de longitud
 + Nombres homologados
 + Que los modos tengan un propósito definido y útil
+
+## Diagrama de funcionamiento
+
+~~~
+flowchart TD
+	A[Inicio] 
+	B[Test de salud]
+	C{Opciones}
+	E[Continuar]
+	G[Reiniciar]
+	H{Modo}
+	I[Generar silencio]
+	J[Reiniciar]
+
+	A --> B --> C
+	C -->|Botón 3 - #| G --> A
+	C -->|Botón 4 - *| E --> H
+	H -->|Botón 4 - *| I
+	H -->|Botón 3 - #| J --> A
+~~~
