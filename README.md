@@ -305,7 +305,7 @@ Modo de creación (`custom_mode`)
 
 ## Diagrama de funcionamiento
 
-~~~
+~~~mermaid
 flowchart TD
 	A[Inicio] 
 	B[Test de salud]
