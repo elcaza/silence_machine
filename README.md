@@ -1,4 +1,9 @@
-# Silence Machine - Dual Core
+<div align="center">
+	<img width=500px src="https://raw.githubusercontent.com/elcaza/silence_machine/refs/heads/main/silence_machine.jpeg">
+	<br>
+	<h1>Silence Machine</h1>
+</div>
+
 La máquina generadora de silencio. Versión de dos núcleos. 
 
 La máquina generadora de silencio es un dispositivo que te ayuda a recobrar la paz perdida cuando la bocina ruidosa de tu vecino suena a máximo volumen. 
@@ -6,7 +11,7 @@ La máquina generadora de silencio es un dispositivo que te ayuda a recobrar la 
 Para entender su funcionamiento necesitamos entender lo siguiente:
 1. La música es la combinación de sonidos, ritmos y silencios expresados en ondas y frecuencias.
 1. Pese a las reglamentaciones locales, las autoridades informan que no pueden hacer nada en contra de las bocinas ruidosas cuando estas suenan dentro de los domicilios. Dicen que si te molesta, "pongas tu música también".
-1. Dado lo anterior, solo quedaba una cosa por hacer. Poner mi música a todo volumen, siendo mi música una combinación de silencios a un a su máxima potencia.
+1. Dado lo anterior, solo quedaba una cosa por hacer. Poner mi música a todo volumen, siendo mi música una combinación de silencios a su máxima potencia.
 
 Señoras y señores, me complace presentarles a la máquina generadora de silencio.
 
@@ -50,9 +55,35 @@ Señoras y señores, me complace presentarles a la máquina generadora de silenc
 
 # Modos de silencio (Single-core)
 + silence_mode_1
+	+ ALL - Genera silencio en todos los canales [0-80]
 + silence_mode_2
+	+ SIDE A - Genera silencio en los primeros 40 canales
 + silence_mode_3
+	+ SIDE B - Genera silencio en los últimos 40 canales
 + silence_mode_4
+	+ WiFi 1
++ silence_mode_5
+	+ WiFi 2
++ silence_mode_6
+	+ WiFi 3
++ silence_mode_7
+	+ WiFi 4
++ silence_mode_8
+	+ WiFi 5
++ silence_mode_9
+	+ WiFi 6
++ silence_mode_10
+	+ WiFi 7
++ silence_mode_11
+	+ WiFi 8
++ silence_mode_12
+	+ WiFi 9
++ silence_mode_13
+	+ WiFi 10
++ silence_mode_14
+	+ WiFi 11
++ credits
+	+ Muestras los enlaces a la documentación oficial
 
 # Tabla de conexiones
 
