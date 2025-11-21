@@ -134,7 +134,8 @@ bool c1_start = false;
 
 const char* all_modes[] = {
 	"Description for mode 1",
-	"Description for mode 2"
+	"Description for mode 2",
+	"Description for mode 3",
 };
 
 int number_of_modes = sizeof(all_modes) / sizeof(all_modes[0]);
@@ -146,6 +147,8 @@ int number_of_modes = sizeof(all_modes) / sizeof(all_modes[0]);
 // ****************************************************
 // START_DUAL_CORE_CODE
 // Modos de silencio, funciones.
+
+// ALL
 void c0_silence_mode_1() {
 	while(1){
 		for (size_t i = 2; i < 79; i++) {
@@ -155,15 +158,27 @@ void c0_silence_mode_1() {
 	}
 }
 
+// SIDE A 2-40
 void c0_silence_mode_2() {
 	while(1){
-		for (size_t i = 2; i < 79; i++) {
+		for (size_t i = 2; i < 41; i++) {
 			radio1.setChannel(i);
-			radio1.setChannel(i+1);
+			radio1.setChannel(i);
 		}
 	}
 }
 
+// SIDE B 40-80
+void c0_silence_mode_3() {
+	while(1){
+		for (size_t i = 40; i < 81; i++) {
+			radio1.setChannel(i);
+			radio1.setChannel(i);
+		}
+	}
+}
+
+// ALL
 void c1_silence_mode_1() {
 	while(1){
 		for (size_t i = 2; i < 79; i++) {
@@ -173,11 +188,22 @@ void c1_silence_mode_1() {
 	}
 }
 
+// SIDE A 2-40
 void c1_silence_mode_2() {
 	while(1){
-		for (size_t i = 2; i < 79; i++) {
-			radio2.setChannel(i+3);
-			radio2.setChannel(i+4);
+		for (size_t i = 2; i < 41; i++) {
+			radio2.setChannel(i+1);
+			radio2.setChannel(i+1);
+		}
+	}
+}
+
+// SIDE B 40-80
+void c1_silence_mode_3() {
+	while(1){
+		for (size_t i = 40; i < 81; i++) {
+			radio2.setChannel(i+1);
+			radio2.setChannel(i+1);
 		}
 	}
 }
@@ -207,6 +233,13 @@ void generate_silence(int p_index) {
 			// DUAL_CORE
 			c0_mode = 2;
 			c1_mode = 2;
+			break;
+		case 3:
+			Serial.println(F("Case 3"));
+			// silence_mode_2();
+			// DUAL_CORE
+			c0_mode = 3;
+			c1_mode = 3;
 			break;
 		default:
 			Serial.println(F("Ocurrio un error en la funcion generate_silenc"));
@@ -283,6 +316,10 @@ void task_core_0(void * pvParameters) {
 					Serial.println(F("Case 2"));
 					c0_silence_mode_2();
 					break;
+				case 3:
+					Serial.println(F("Case 3"));
+					c0_silence_mode_3();
+					break;
 				default:
 					Serial.println(F("Ocurrio un error en la funcion generate_silenc()"));
 					break;
@@ -308,6 +345,10 @@ void task_core_1(void * pvParameters) {
 				case 2:
 					Serial.println(F("Case 2"));
 					c1_silence_mode_2();
+					break;
+				case 3:
+					Serial.println(F("Case 3"));
+					c1_silence_mode_3();
 					break;
 				default:
 					Serial.println(F("Ocurrio un error en la funcion generate_silenc()"));
