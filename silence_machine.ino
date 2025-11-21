@@ -133,9 +133,9 @@ bool c1_start = false;
 // ****************************************************
 
 const char* all_modes[] = {
-	"Description for mode 1",
-	"Description for mode 2",
-	"Description for mode 3",
+	"All 0-80",
+	"Side A 2-39",
+	"Side B 40-80"
 };
 
 int number_of_modes = sizeof(all_modes) / sizeof(all_modes[0]);
