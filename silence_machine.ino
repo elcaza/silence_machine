@@ -148,7 +148,8 @@ int number_of_modes = sizeof(all_modes) / sizeof(all_modes[0]);
 // Modos de silencio, funciones.
 void c0_silence_mode_1() {
 	while(1){
-		for (size_t i = 0; i < 40; i++) {
+		for (size_t i = 2; i < 79; i++) {
+			radio1.setChannel(i);
 			radio1.setChannel(i);
 		}
 	}
@@ -156,24 +157,27 @@ void c0_silence_mode_1() {
 
 void c0_silence_mode_2() {
 	while(1){
-		for (size_t i = 0; i < 40; i++) {
+		for (size_t i = 2; i < 79; i++) {
 			radio1.setChannel(i);
+			radio1.setChannel(i+1);
 		}
 	}
 }
 
 void c1_silence_mode_1() {
 	while(1){
-		for (size_t i = 0; i < 40; i++) {
-			radio2.setChannel(i+40);
+		for (size_t i = 2; i < 79; i++) {
+			radio2.setChannel(i+1);
+			radio2.setChannel(i+1);
 		}
 	}
 }
 
 void c1_silence_mode_2() {
 	while(1){
-		for (size_t i = 0; i < 40; i++) {
-			radio2.setChannel(i+40);
+		for (size_t i = 2; i < 79; i++) {
+			radio2.setChannel(i+3);
+			radio2.setChannel(i+4);
 		}
 	}
 }
