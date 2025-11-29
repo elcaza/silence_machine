@@ -212,28 +212,28 @@ Señoras y señores, me complace presentarles a la máquina generadora de silenc
 			<td></td>
 		</tr>
 		<tr>
-			<td>Button 1 - UP</td>
+			<td>Button 1 - UP - K1</td>
 			<td>Terminal</td>
 			<td>GPIO 25</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Button 2 - DOWN</td>
+			<td>Button 2 - DOWN - K2</td>
 			<td>Terminal</td>
 			<td>GPIO 26</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Button 3 - #</td>
+			<td>Button 3 - # - K3</td>
 			<td>Terminal</td>
 			<td>EN</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>Button 4 - *</td>
+			<td>Button 4 - * - K4</td>
 			<td>Terminal</td>
 			<td>GPIO 27</td>
 			<td></td>
@@ -272,6 +272,7 @@ Señoras y señores, me complace presentarles a la máquina generadora de silenc
 
 + Las otras terminales de los botones, se conectan a GND. Cuando se usa la pantalla OLED con botones integrados, estos ya están cableados a GND.
 + Si se ocupan los pines de 2da opción, se debe modificar el código correspondiente en `// INICIO DE OPCIONES CONFIGURABLES`
++ Los botones los tomamos en cuenta de arriba para abajo. 1,2,3,4.
 
 # Crea tus propios modos de silencio
 Este proyecto es posible gracias a proyectos similares que eran Open Source, por lo que este proyecto también lo es y busca:
